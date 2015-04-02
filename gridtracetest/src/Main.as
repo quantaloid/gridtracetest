@@ -15,7 +15,7 @@ package
 	
 	public class Main extends Sprite 
 	{
-		private var gridSize:int = 64;
+		private var gridSize:int = 50;
 		private var raypos:Point;
 		private var raydir:Point;
 		private var raydist:Number;
@@ -32,25 +32,23 @@ package
 			// entry point
 			
 			// set up ray
-			raypos = new Point(28, 96);
+			raypos = new Point(20, 90);
 			raydir = new Point(3, 2);
 			raydir.normalize(1.0);
-			raydist = 480;
+			raydist = 500;
 			
 			// draw grid
 			graphics.lineStyle(1.0, 0x404040, 1.0);
-			for (var i:int = 0; i < int(512 / gridSize); i++)
+			for (var i:int = 0; i < int(stage.stageHeight / gridSize); i++)
 			{
 				graphics.moveTo(0, i * gridSize);
-				graphics.lineTo(512, i * gridSize);
+				graphics.lineTo(stage.stageWidth, i * gridSize);
 			}
-			for (i = 0; i < int(512 / gridSize); i++)
+			for (i = 0; i < int(stage.stageWidth / gridSize); i++)
 			{
 				graphics.moveTo(i * gridSize, 0);
-				graphics.lineTo(i * gridSize, 512);
+				graphics.lineTo(i * gridSize, stage.stageHeight);
 			}
-			
-			graphics.drawCircle(-32, -32, 4);
 			
 			// find starting grid coordinates
 			var gridx:int = int(raypos.x / gridSize);
