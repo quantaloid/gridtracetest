@@ -60,20 +60,23 @@ package
 			
 			// calculate distance to first grid intersection in terms of ray length
 			var tmaxx:Number = raydir.x > 0 ? ((gridx + 1.0) * gridSize - (raypos.x)) : ((raypos.x) - gridx * gridSize);
-			tmaxx /= (raydist * raydir.x);
+			tmaxx = Math.abs(tmaxx / (raydist * raydir.x));
 			var tmaxy:Number = raydir.y > 0 ? ((gridy + 1.0) * gridSize - (raypos.y)) : ((raypos.y) - gridy * gridSize);
-			tmaxy /= (raydist * raydir.y);
+			tmaxy = Math.abs(tmaxy / (raydist * raydir.y));
 			
 			// claculate grid size in terms of ray length
-			var tdeltax:Number = gridSize / (raydir.x * raydist);
-			var tdeltay:Number = gridSize / (raydir.y * raydist);
+			var tdeltax:Number = Math.abs(gridSize / (raydir.x * raydist));
+			var tdeltay:Number = Math.abs(gridSize / (raydir.y * raydist));
 			
 			// calculate end point grid coordinates
 			var maxx:int = int((raypos.x + raydir.x * raydist) / gridSize);
 			var maxy:int = int((raypos.y + raydir.y * raydist) / gridSize);
 			
+			// calculate number of grid spaces to traverse
+			var n:int = Math.abs(maxx - gridx) + Math.abs(maxy - gridy);
+			
 			// trace through grid
-			while (gridx <= maxx && gridy <= maxy)
+			for (i = 0; i <= n; i++)
 			{
 				graphics.lineStyle(1.0, 0x808080, 1.0);
 				graphics.beginFill(0x808080, 0.1);
