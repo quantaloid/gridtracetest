@@ -31,12 +31,6 @@ package
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			// entry point
 			
-			// set up ray
-			raypos = new Point(20, 90);
-			raydir = new Point(3, 2);
-			raydir.normalize(1.0);
-			raydist = 500;
-			
 			// draw grid
 			graphics.lineStyle(1.0, 0x404040, 1.0);
 			for (var i:int = 0; i < int(stage.stageHeight / gridSize); i++)
@@ -50,7 +44,13 @@ package
 				graphics.lineTo(i * gridSize, stage.stageHeight);
 			}
 			
-			// find starting grid coordinates
+			// set up ray
+			raypos = new Point(20, 90);
+			raydir = new Point(3, 2);
+			raydir.normalize(1.0);
+			raydist = 500;
+			
+			// find starting grid coordinates using ray position
 			var gridx:int = int(raypos.x / gridSize);
 			var gridy:int = int(raypos.y / gridSize);
 			
@@ -58,25 +58,25 @@ package
 			var stepx:int = raydir.x > 0 ? 1: -1;
 			var stepy:int = raydir.y > 0 ? 1: -1;
 			
-			// calculate distance to first grid intersection in terms of ray length
+			// calculate distance to first x and y grid intersections in terms of ray distance
 			var tmaxx:Number = raydir.x > 0 ? ((gridx + 1.0) * gridSize - (raypos.x)) : ((raypos.x) - gridx * gridSize);
 			tmaxx = Math.abs(tmaxx / (raydist * raydir.x));
 			var tmaxy:Number = raydir.y > 0 ? ((gridy + 1.0) * gridSize - (raypos.y)) : ((raypos.y) - gridy * gridSize);
 			tmaxy = Math.abs(tmaxy / (raydist * raydir.y));
 			
-			// claculate grid size in terms of ray length
+			// claculate grid size in terms of ray distance
 			var tdeltax:Number = Math.abs(gridSize / (raydir.x * raydist));
 			var tdeltay:Number = Math.abs(gridSize / (raydir.y * raydist));
 			
-			// calculate end point grid coordinates
+			// calculate grid coordinates of end point
 			var maxx:int = int((raypos.x + raydir.x * raydist) / gridSize);
 			var maxy:int = int((raypos.y + raydir.y * raydist) / gridSize);
 			
 			// calculate number of grid spaces to traverse
-			var n:int = Math.abs(maxx - gridx) + Math.abs(maxy - gridy);
+			var n:int = Math.abs(maxx - gridx) + Math.abs(maxy - gridy) + 1;
 			
 			// trace through grid
-			for (i = 0; i <= n; i++)
+			for (i = 0; i < n; i++)
 			{
 				graphics.lineStyle(1.0, 0x808080, 1.0);
 				graphics.beginFill(0x808080, 0.1);
