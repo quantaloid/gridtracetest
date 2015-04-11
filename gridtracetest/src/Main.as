@@ -15,7 +15,7 @@ package
 	
 	public class Main extends Sprite 
 	{
-		private var gridSize:int = 50;
+		private var gridSize:int;
 		private var raypos:Point;
 		private var raydir:Point;
 		private var raydist:Number;
@@ -31,14 +31,17 @@ package
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			// entry point
 			
+			// set the size of a single grid space
+			gridSize = 50;
+			
 			// draw grid
 			graphics.lineStyle(1.0, 0x404040, 1.0);
-			for (var i:int = 0; i < int(stage.stageHeight / gridSize); i++)
+			for (var i:int = 0; i <= int(stage.stageHeight / gridSize); i++)
 			{
 				graphics.moveTo(0, i * gridSize);
 				graphics.lineTo(stage.stageWidth, i * gridSize);
 			}
-			for (i = 0; i < int(stage.stageWidth / gridSize); i++)
+			for (i = 0; i <= int(stage.stageWidth / gridSize); i++)
 			{
 				graphics.moveTo(i * gridSize, 0);
 				graphics.lineTo(i * gridSize, stage.stageHeight);
